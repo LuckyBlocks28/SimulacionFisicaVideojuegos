@@ -1,5 +1,6 @@
 #pragma once
 #include "PxPhysicsAPI.h"
+#include <cmath>
 
 template<typename T = float>
 class Vector3D {
@@ -12,7 +13,7 @@ public:
 	inline Vector3D(T x, T y, T z) : _x(x), _y(y), _z(z) {};
 	inline Vector3D(const physx::PxVec3& v) : _x(v.x), _y(v.y), _z(v.z) {};
 
-	inline float magnitud() const {
+	inline float magnitud() const { 		
 		return std::sqrtf(std::powf(_x, 2) + std::powf(_y, 2) + std::powf(_z, 2));
 	};
 	inline Vector3D normlize() const {
@@ -42,8 +43,14 @@ public:
 	inline Vector3D operator*(float d) {
 		return Vector3D(_x * d, _y * d, _z * d);
 	}
+	inline Vector3D operator*(const Vector3D& v) {
+		return Vector3D(_x * v._x, _y * v._y, _z * v._z);
+	}
 	inline Vector3D operator/(float d) const {
 		return Vector3D(_x / d, _y / d, _z / d);
+	}
+	inline Vector3D operator/(const Vector3D& v) const {
+		return Vector3D(_x / v._x, _y / v._y, _z / v._z);
 	}
 	inline Vector3D& operator+=(const Vector3D& v) {
 		_x += v._x;

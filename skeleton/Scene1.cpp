@@ -2,7 +2,7 @@
 
 void Scene1::init()
 {
-	prueba = new Particle(Vector3D<float>(0.0f,10.0f,0.0f), Vector3D<float>(10.0f, 0.0f, 0.0f), Vector3D<float>(10.0f, 0.0f, 0.0f), 5.0f);
+	prueba = new Particle(Vector3D<float>(0.0f,10.0f,0.0f), Vector3D<float>(10.0f, 0.0f, 0.0f), 5.0f);
 }
 
 void Scene1::update(double dt)
@@ -21,6 +21,7 @@ void Scene1::keyPress(unsigned char key, const physx::PxTransform& camera)
 void Scene1::cleanup()
 {
 	if (prueba) {
-		prueba->release();
+		delete prueba;
+		prueba = nullptr;
 	}
 }

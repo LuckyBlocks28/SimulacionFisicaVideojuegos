@@ -32,6 +32,7 @@ public:
     // Devuelve el nombre identificador de la escena.
     [[nodiscard]] const std::string& getName() const { return m_name; }
 
+
 protected:
     // Nombre de la escena (útil para identificarla en menús o logs).
     std::string m_name;

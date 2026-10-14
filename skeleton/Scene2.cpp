@@ -37,13 +37,13 @@ void Scene2::keyPress(unsigned char key, const physx::PxTransform& camera)
 		}
 	}
 	else if (key == 'e' || key == 'E') {
-		m_proyectiles.push_back(new Proyectile(camPos, shootDir * 330.f, 5.0f, masaPistola));
+		m_proyectiles.push_back(new Proyectile(camPos, shootDir * 330.f, 5.0f, masaPistola, Vector4(0.0, 1.0, 0.0, 1.0)));
 	}
 	else if (key == 'q' || key == 'Q') {
-		m_proyectiles.push_back(new Proyectile(camPos, shootDir * 2000.f, 5.0f, masaTanque));
+		m_proyectiles.push_back(new Proyectile(camPos, shootDir * 2000.f, 5.0f, masaTanque, Vector4(0.0, 0.0, 1.0, 1.0)));
 	}
 	else if (key == 't' || key == 'T') {
-		m_proyectiles.push_back(new Proyectile(camPos, shootDir * 500.f, 5.0f, masaCanon));
+		m_proyectiles.push_back(new Proyectile(camPos, shootDir * 500.f, 5.0f, masaCanon,Vector4(1.0,0.0,0.0,1.0)));
 	}
 }
 

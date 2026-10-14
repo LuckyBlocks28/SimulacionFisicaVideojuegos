@@ -16,6 +16,8 @@
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
     <ClCompile Include="Proyectile.cpp" />
+    <ClCompile Include="Emissor.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core.hpp" />
@@ -31,10 +33,12 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="EmptyScene.h" />
     <ClInclude Include="Vector3D.h" />
-    <ClInclude Include="Particle.h" />
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
     <ClInclude Include="Proyectile.h" />
+    <ClInclude Include="Emissor.h" />
+    <ClInclude Include="ParticleSystem.h" />
+    <ClInclude Include="Particle.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

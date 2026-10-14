@@ -72,8 +72,7 @@ void Scene3::keyPress(unsigned char key, const physx::PxTransform& camera)
         break;
 
     case '-':
-        float newFreq = m_fountainEmitter->getFreq() - 5.0f;
-        m_fountainEmitter->setFreq(newFreq < 1.0f ? 1.0f : newFreq);
+        m_fountainEmitter->setFreq((m_fountainEmitter->getFreq() - 5.0f) < 1.0f ? 1.0f : (m_fountainEmitter->getFreq() - 5.0f));
         break;
 
         // Disparar una ráfaga instantánea/proyectil desde la posición de la cámara

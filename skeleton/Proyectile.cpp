@@ -6,7 +6,7 @@ Proyectile::Proyectile(Vector3D<float> p, Vector3D<float> v, float size, float m
 	vel = velR / velSFactor;
 	simulated_Velocity = vel.magnitud();
 
-	acc = Vector3D<float>(0.0f, simulated_Gravity, 0.0f);
+	acc = Vector3D<float>(0.0f, -simulated_Gravity, 0.0f);
 }
 
 float Proyectile::calculateSimulatedMass()

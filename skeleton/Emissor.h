@@ -6,6 +6,10 @@
 #include <vector>
 #include <functional>
 #include <random>
+#include <cmath>
+#include <limits>
+#include <numbers>
+#include <algorithm>
 
 class ParticleSystem;
 class Emissor
@@ -71,52 +75,55 @@ public:
 	};
 
 protected:
-	Emissor(Vector3D<float> position, Vector3D<float> direction, float m_minVel, float m_maxVel, TYPE type, float mean, float stdD, float freq, bool active, GEOMETRY geometry);
+	Emissor(Vector3D<float> position, Vector3D<float> direction,float size, float lifeTime, Vector4 color, float m_minVel, float m_maxVel, TYPE type, float mean, float stdD, float freq, bool active, GEOMETRY geometry);
 
-	Emissor(Vector3D<float> position, Vector3D<float> direction, float m_minVel, float m_maxVel, TYPE type, DATA::circle data,
+	Emissor(Vector3D<float> position, Vector3D<float> direction, float size, float lifeTime, Vector4 color, float m_minVel, float m_maxVel, TYPE type, DATA::circle data,
 		float mean = 0.f, float stdD = 1.f, float freq = 1.f, bool active = false);
 
-	Emissor(Vector3D<float> position, Vector3D<float> direction, float m_minVel, float m_maxVel, TYPE type, DATA::square data,
+	Emissor(Vector3D<float> position, Vector3D<float> direction, float size, float lifeTime, Vector4 color, float m_minVel, float m_maxVel, TYPE type, DATA::square data,
 		float mean = 0.f, float stdD = 1.f, float freq = 1.0f, bool active = false);
 
-	Emissor(Vector3D<float> position, Vector3D<float> direction, float m_minVel, float m_maxVel, TYPE type, DATA::rectangle data,
+	Emissor(Vector3D<float> position, Vector3D<float> direction, float size, float lifeTime, Vector4 color, float m_minVel, float m_maxVel, TYPE type, DATA::rectangle data,
 		float mean = 0.f, float stdD = 1.f, float freq = 1.0f, bool active = false);
 
-	Emissor(Vector3D<float> position,Vector3D<float> direction,float m_minVel, float m_maxVel,TYPE type,DATA::cube data,
+	Emissor(Vector3D<float> position,Vector3D<float> direction, float size, float lifeTime, Vector4 color, float m_minVel, float m_maxVel,TYPE type,DATA::cube data,
 		float mean = 0.f, float stdD = 1.f,float freq = 1.0f,bool active = false);
 
-	Emissor(Vector3D<float> position, Vector3D<float> direction, float m_minVel, float m_maxVel, TYPE type, DATA::box data,
+	Emissor(Vector3D<float> position, Vector3D<float> direction, float size, float lifeTime, Vector4 color, float m_minVel, float m_maxVel, TYPE type, DATA::box data,
 		float mean = 0.f, float stdD = 1.f, float freq = 1.0f, bool active = false);
 
-	Emissor(Vector3D<float> position, Vector3D<float> direction, float m_minVel, float m_maxVel, TYPE type, DATA::sphere data,
+	Emissor(Vector3D<float> position, Vector3D<float> direction, float size, float lifeTime, Vector4 color, float m_minVel, float m_maxVel, TYPE type, DATA::sphere data,
 		float mean = 0.f, float stdD = 1.f, float freq = 1.0f, bool active = false);
 
 	float uniformRandom(float min, float max);
 	float normalRandom(float min, float max, float mean, float stdDeviation);
 
 	float newFloat(float min, float max);
-	Vector3D<float> newPosition();
-	Vector3D<float> newDirection(const Vector3D<float> pos);
+
+	Vector3D<float> calculateDirection();
+	Vector3D<float> calculateNewPosition();
+	void rotatePoint(Vector3D<float>& position, const Vector3D<float>& u, const Vector3D<float>& v, const Vector3D<float>& center);
 
 public:
 
-	static Emissor* createRectangleGenerator(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, float depth, float groundWidth, float groundHeight, float airWidth, float airHeight, float m_minVel, float m_maxVel,
-		TYPE particleType, float mean = 0.f, float stdD = 1.f, float freq = 1.f, bool active = false);
+	static Emissor* createRectangleGenerator(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, float pSize, float lifeTime, Vector4 color,
+		float depth, float groundWidth, float groundHeight, float airWidth, float airHeight, float m_minVel, float m_maxVel,TYPE particleType, float mean = 0.f, 
+		float stdD = 1.f, float freq = 1.f, bool active = false);
 
-	static Emissor* createSquareGenerator(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, float depth, float groundSize, float airSize, float m_minVel, float m_maxVel, TYPE particleType,
-		float mean = 0.f, float stdD = 1.f, float freq = 1.f, bool active = false);
+	static Emissor* createSquareGenerator(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, float pSize, float lifeTime, Vector4 color,
+		float depth, float groundSize, float airSize, float m_minVel, float m_maxVel, TYPE particleType, float mean = 0.f, float stdD = 1.f, float freq = 1.f, bool active = false);
 
-	static Emissor* createCircleGenerator(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, float depth, float groundRadius, float airRadius, float m_minVel, float m_maxVel, TYPE particleType,
-		float mean = 0.f, float stdD = 1.f, float freq = 1.f, bool active = false);
+	static Emissor* createCircleGenerator(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, float pSize, float lifeTime, Vector4 color,
+		float depth, float groundRadius, float airRadius, float m_minVel, float m_maxVel, TYPE particleType, float mean = 0.f, float stdD = 1.f, float freq = 1.f, bool active = false);
 
-	static Emissor* createCubeGenerator(ParticleSystem* pS, Vector3D<float> position,Vector3D<float> direction,float size,float m_minVel, float m_maxVel,TYPE particleType,
-		float mean = 0.f, float stdD = 1.f,float freq = 1.f,bool active = false);
+	static Emissor* createCubeGenerator(ParticleSystem* pS, Vector3D<float> position,Vector3D<float> direction, float pSize, float lifeTime, Vector4 color,
+		float size,float m_minVel, float m_maxVel,TYPE particleType, float mean = 0.f, float stdD = 1.f,float freq = 1.f,bool active = false);
 
-	static Emissor* createBoxGenerator(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, float width, float height, float depth, float m_minVel, float m_maxVel, TYPE particleType,
-		float mean = 0.f, float stdD = 1.f, float freq = 1.f, bool active = false);
+	static Emissor* createBoxGenerator(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, float pSize, float lifeTime, Vector4 color,
+		float width, float height, float depth, float m_minVel, float m_maxVel, TYPE particleType, float mean = 0.f, float stdD = 1.f, float freq = 1.f, bool active = false);
 
-	static Emissor* createSphereGenerator(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, float radius, float m_minVel, float m_maxVel, TYPE particleType,
-		float mean = 0.f, float stdD = 1.f, float freq = 1.f, bool active = false);
+	static Emissor* createSphereGenerator(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, float pSize, float lifeTime, Vector4 color,
+		float radius, float m_minVel, float m_maxVel, TYPE particleType, float mean = 0.f, float stdD = 1.f, float freq = 1.f, bool active = false);
 
 	virtual ~Emissor() {};
 	
@@ -139,6 +146,9 @@ public:
 	inline float getMinVel() const noexcept { return m_minVel; }
 	inline float getMaxVel() const noexcept { return m_maxVel; }
 	inline float getFreq() const noexcept { return m_freq; }
+	inline float getSize() const noexcept { return m_size; }
+	inline float getLifeTime() const noexcept { return m_lifeTime; }
+	inline Vector4 getColor() const noexcept { return m_color; }
 
 	virtual bool update(double t);
 
@@ -149,7 +159,8 @@ protected:
 	DENSITYFUNTION m_densityFunc;
 
 	Vector3D<float> m_position, m_direction;
-	float m_mean, m_stdDeviation, m_minVel, m_maxVel, m_freq, m_currT;
+	Vector4 m_color;
+	float m_mean, m_stdDeviation, m_minVel, m_maxVel, m_freq, m_currT, m_size,m_lifeTime;
 	bool m_active;
 
 	std::mt19937 m_engine;

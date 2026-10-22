@@ -2,12 +2,12 @@
 #include <algorithm>
 
 ParticleSystem::ParticleSystem(): m_gravity(0.0f, -9.8f, 0.0f), m_minBounds(-100.0f, -100.0f, -100.0f), m_maxBounds(100.0f, 100.0f, 100.0f), m_useBounds(true), m_defaultParticleSize(0.5f),
-    m_defaultParticleColor(Vector4(1.0f, 0.5f, 0.0f, 1.0f)), m_defaultLifeTime(4.0f)
+    m_defaultParticleColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f)), m_defaultLifeTime(4.0f)
 {
 }
 
 ParticleSystem::ParticleSystem(Vector3D<float> gravity, Vector3D<float> minBounds, Vector3D<float> maxBounds): m_gravity(gravity), m_minBounds(minBounds), m_maxBounds(maxBounds), m_useBounds(true),
-	m_defaultParticleSize(0.5f), m_defaultParticleColor(Vector4(1.0f, 0.5f, 0.0f, 1.0f)), m_defaultLifeTime(4.0f)
+	m_defaultParticleSize(0.5f), m_defaultParticleColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f)), m_defaultLifeTime(4.0f)
 {
 }
 
@@ -60,7 +60,7 @@ void ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, float
 	m_particles.push_back(p);
 }
 
-void ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, Emissor::TYPE type, float lifeTime, float size, Vector4 color)
+void ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, float size, Emissor::TYPE type, float lifeTime, Vector4 color)
 {
 	Particle* p = nullptr;
 

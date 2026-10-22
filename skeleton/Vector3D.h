@@ -22,10 +22,10 @@ public:
 	};
 	
 	T dot(const Vector3D& v) const {
-		return (x * _v.x + _y * v._y + _z * v._z);
+		return (_x * v._x + _y * v._y + _z * v._z);
 	};
 	Vector3D cross(const Vector3D& v) const {
-		return { _y * v._z - z,_z * v._x - _x,_x * v._y - _y };
+		return { _y * v._z - _z,_z * v._x - _x,_x * v._y - _y };
 	};
 
 	T getX() const { return _x; }

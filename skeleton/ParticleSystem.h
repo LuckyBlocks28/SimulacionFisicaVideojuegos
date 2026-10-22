@@ -35,7 +35,7 @@ public:
 	// Creación e inserción de partículas
 	void addParticle(Particle* particle);
 	void addParticle(Vector3D<float> pos, Vector3D<float> vel, float lifeTime = 5.0f, float size = 1.0f, Vector4 color = Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-	void addParticle(Vector3D<float> pos, Vector3D<float> vel, Emissor::TYPE type = Emissor::PARTICLE, float lifeTime = 4.0f, float size = 0.5f, Vector4 color = Vector4(1.0f, 0.5f, 0.0f, 1.0f));
+	void addParticle(Vector3D<float> pos, Vector3D<float> vel, float size = 0.5f, Emissor::TYPE type = Emissor::PARTICLE, float lifeTime = 4.0f, Vector4 color = Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 
 	// Bucle principal
 	void update(double dt);

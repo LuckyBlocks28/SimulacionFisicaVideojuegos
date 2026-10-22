@@ -78,7 +78,6 @@ void Particle::update(float dt)
 }
 void Particle::deactivate()
 {
-	active = false;
 	// Mover lejos o desactivar el renderizado para que no se dibuje
 	active = false;
 	if (renderItem) {

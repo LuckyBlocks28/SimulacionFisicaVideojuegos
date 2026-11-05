@@ -1,30 +1,31 @@
 #include "Proyectile.h"
 
-Proyectile::Proyectile(Vector3D<float> p, Vector3D<float> v, float size, float mass,Vector4 color):
-	Particle(p,v,size,color),real_Mass(mass), velR(v),simulated_Mass(calculateSimulatedMass()),simulated_Gravity(calculateSimulateGravity())
+Proyectile::Proyectile(Vector3D<float> p, Vector3D<float> v, float size, float mass, Vector4 color)
+	: Particle(p, v, size, mass, color), velR(v) // Orden correcto de size y mass
 {
+	// 1. Calcular velocidades primero
 	vel = velR / velSFactor;
 	simulated_Velocity = vel.magnitud();
 
-	acc = Vector3D<float>(0.0f, -simulated_Gravity, 0.0f);
+	// 2. Calcular masa y gravedad simulada una vez asignada simulated_Velocity
+	simulated_Mass = calculateSimulatedMass();
+	simulated_Gravity = calculateSimulateGravity();
+
+	acc = Vector3D<float>(0.0f, -std::abs(simulated_Gravity), 0.0f);
+	
+	damping = 0.999f;
 }
 
 float Proyectile::calculateSimulatedMass()
 {
-	float real_vel_mag = velR.magnitud();
-	if (real_vel_mag == 0.0f) return real_Mass;
-	return real_Mass * pow((vel.magnitud()/simulated_Velocity), 2);
+	if (simulated_Velocity < 0.0001f) return real_Mass;
+	float ratio = vel.magnitud() / simulated_Velocity;
+	return real_Mass * (ratio * ratio);
 }
 
 float Proyectile::calculateSimulateGravity()
 {
-	float real_vel_mag = velR.magnitud();
-	if (real_vel_mag == 0.0f) return real_Gravity;
-
-	return real_Gravity * pow((vel.magnitud() / simulated_Velocity), 2);
-}
-
-void Proyectile::setMass(float mass) {
-	real_Mass = mass;
-	calculateSimulatedMass();
+	if (simulated_Velocity < 0.0001f) return real_Gravity;
+	float ratio = vel.magnitud() / simulated_Velocity;
+	return real_Gravity * (ratio * ratio);
 }

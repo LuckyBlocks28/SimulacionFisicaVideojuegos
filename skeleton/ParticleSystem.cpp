@@ -1,5 +1,6 @@
 #include "ParticleSystem.h"
 #include <algorithm>
+#include "ForceSystem.h"
 
 ParticleSystem::ParticleSystem(): m_gravity(0.0f, -9.8f, 0.0f), m_minBounds(-100.0f, -100.0f, -100.0f), m_maxBounds(100.0f, 100.0f, 100.0f), m_useBounds(true), m_defaultParticleSize(0.5f),
     m_defaultParticleColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f)), m_defaultLifeTime(4.0f)
@@ -13,20 +14,20 @@ ParticleSystem::ParticleSystem(Vector3D<float> gravity, Vector3D<float> minBound
 
 ParticleSystem::~ParticleSystem()
 {
-	// Liberar la memoria de todas las partículas activas/inactivas
-	for (Particle* p : m_particles) {
-		if (p) {
-			p->deactivate();
-			delete p;
-		}
-	}
-	m_particles.clear();
-
-	// Liberar la memoria de los emisores registrados
+	// Liberar emisores
 	for (Emissor* emitter : m_emitters) {
 		delete emitter;
 	}
 	m_emitters.clear();
+
+	// Liberar partículas activas e inactivas
+	for (Particle* p : m_particles) {
+		if (p) {
+			p->deactivate(); // Libera el RenderItem de PhysX
+			delete p;
+		}
+	}
+	m_particles.clear();
 }
 
 void ParticleSystem::addEmissor(Emissor* emitter)
@@ -52,26 +53,31 @@ void ParticleSystem::addParticle(Particle* particle)
 	}
 }
 
-void ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, float lifeTime, float size, Vector4 color)
+
+
+void ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, float mass, float size, float lifeTime, Vector4 color)
 {
-	Particle* p = new Particle(pos, vel, size, color);
+	Particle* p = new Particle(pos,vel,size,mass,color);
 	p->setAcceleration(m_gravity); // Aplica la gravedad (-10 en Y)
 	p->setLifeTime(lifeTime);
 	m_particles.push_back(p);
 }
 
-void ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, float size, Emissor::TYPE type, float lifeTime, Vector4 color)
+void ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, float mass, float size, float lifeTime, Emissor::TYPE type, Vector4 color)
 {
 	Particle* p = nullptr;
 
 	if (type == Emissor::PROYECTILE) {
+
 		// Instancia la clase derivada Proyectile
 		float defaultMass = 1.0f;
 		p = new Proyectile(pos, vel, size, defaultMass, color);
 	}
+
 	else {
+
 		// Instancia la clase base Particle
-		p = new Particle(pos, vel, size, color);
+		p = new Particle(pos, vel, size, mass, color);
 		p->setAcceleration(m_gravity); // Aplica gravedad global si es partícula estándar
 	}
 
@@ -80,7 +86,6 @@ void ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, float
 		m_particles.push_back(p);
 	}
 }
-
 bool ParticleSystem::isOutOfBounds(const physx::PxVec3& pos) const
 {
 	if (!m_useBounds) return false;

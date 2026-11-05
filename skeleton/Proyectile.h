@@ -9,15 +9,12 @@ public:
     float calculateSimulatedMass();
     float calculateSimulateGravity();
 
-    void setMass(float mass);
-    inline float getMass() const { return real_Mass; }
-
 private:
     const float velSFactor = 10.0f;
     const float real_Gravity = -9.8f;
 
     Vector3D<float> velR;
-    float real_Mass;
+
     
     float simulated_Mass;
     float simulated_Gravity;

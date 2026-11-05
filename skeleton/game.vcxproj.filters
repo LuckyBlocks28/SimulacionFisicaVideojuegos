@@ -7,44 +7,174 @@
     <ClCompile Include="Render\Render.cpp">
       <Filter>Render</Filter>
     </ClCompile>
-    <ClCompile Include="RenderUtils.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="callbacks.cpp" />
-    <ClCompile Include="Scene.cpp" />
-    <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="Particle.cpp" />
-    <ClCompile Include="Scene1.cpp" />
-    <ClCompile Include="Scene2.cpp" />
-    <ClCompile Include="Proyectile.cpp" />
-    <ClCompile Include="Emissor.cpp" />
-    <ClCompile Include="ParticleSystem.cpp" />
-    <ClCompile Include="Scene3.cpp" />
+    <ClCompile Include="CilinderGeometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="PrismGeometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleSystem.cpp">
+      <Filter>ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Emissor.cpp">
+      <Filter>ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene1.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene2.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene3.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="RenderUtils.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="callbacks.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ForceSystem.cpp">
+      <Filter>ForceSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="Proyectile.cpp">
+      <Filter>Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxGeometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="SphereGeometry.cpp">
+      <Filter>Geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene4.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GravityForceEmissor.cpp">
+      <Filter>ForceSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="AirForceEmissor.cpp">
+      <Filter>ForceSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="TyphoonForceEmissor.cpp">
+      <Filter>ForceSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosionForceEmissor.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="core.hpp" />
     <ClInclude Include="Render\Camera.h">
       <Filter>Render</Filter>
     </ClInclude>
     <ClInclude Include="Render\Render.h">
       <Filter>Render</Filter>
     </ClInclude>
-    <ClInclude Include="RenderUtils.hpp" />
-    <ClInclude Include="callbacks.hpp" />
-    <ClInclude Include="Scene.h" />
-    <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="EmptyScene.h" />
-    <ClInclude Include="Vector3D.h" />
-    <ClInclude Include="Scene1.h" />
-    <ClInclude Include="Scene2.h" />
-    <ClInclude Include="Proyectile.h" />
-    <ClInclude Include="Emissor.h" />
-    <ClInclude Include="ParticleSystem.h" />
-    <ClInclude Include="Particle.h" />
-    <ClInclude Include="Scene3.h" />
+    <ClInclude Include="Geometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="CilinderGeometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="PrismGeometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Emissor.h">
+      <Filter>ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene1.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene2.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene3.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderUtils.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="core.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="callbacks.hpp">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="EmptyScene.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceEmmiter.h">
+      <Filter>ForceSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceSystem.h">
+      <Filter>ForceSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Proyectile.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxGeometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="SphereGeometry.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleSystem.h">
+      <Filter>ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene4.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GravityForceEmissor.h">
+      <Filter>ForceSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="AirForceEmissor.h">
+      <Filter>ForceSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="TyphoonForceEmissor.h">
+      <Filter>ForceSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionForceEmissor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
       <UniqueIdentifier>{d04b4f9f-5a69-465e-8070-25c6d0bcd3c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{3be46b9c-246d-4461-bdd7-136b2d63c3b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ParticleSystem">
+      <UniqueIdentifier>{dbe7dc6b-b68b-4980-9163-a289d0c22aa2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scenes">
+      <UniqueIdentifier>{ac0c99d7-09a6-4d43-a2da-1769cac35308}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{e6f704b7-6fc3-49f0-bebd-d85775e5c41f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particles">
+      <UniqueIdentifier>{5c5d54c3-8a10-49f7-a3fa-49ac3ed85ecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ForceSystem">
+      <UniqueIdentifier>{4b4ffb0c-3116-493d-b1da-35ecfd3b536f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

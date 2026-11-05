@@ -53,8 +53,6 @@ void ParticleSystem::addParticle(Particle* particle)
 	}
 }
 
-
-
 void ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, float mass, float size, float lifeTime, Vector4 color)
 {
 	Particle* p = new Particle(pos,vel,size,mass,color);

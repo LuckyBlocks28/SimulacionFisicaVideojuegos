@@ -27,7 +27,6 @@ public:
     void cleanup() override;
 private:
     ParticleSystem* m_particleSystem = nullptr;
-    Emissor* m_fountainEmitter = nullptr;
     ForceSystem* m_ForceSystem = nullptr;
     ExplosionForceEmissor* m_explosionEmissor = nullptr;
 };

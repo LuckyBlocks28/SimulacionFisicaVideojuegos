@@ -13,5 +13,6 @@ public:
     void cleanup() override;
 private:
     Particle* prueba;
+    Particle* prueba1;
 };
 

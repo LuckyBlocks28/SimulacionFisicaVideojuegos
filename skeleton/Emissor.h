@@ -60,6 +60,7 @@ public:
 	inline float getSize() const noexcept { return m_size; }
 	inline float getLifeTime() const noexcept { return m_lifeTime; }
 	inline Vector4 getColor() const noexcept { return m_color; }
+	inline bool getActive() const noexcept { return m_active; }
 
 	virtual bool update(double t);
 

@@ -59,6 +59,17 @@ public:
 	inline const std::vector<Particle*>& getParticles() const noexcept { return m_particles; }
 	inline size_t getParticleCount() const noexcept { return m_particles.size(); }
 
+	inline void onOffAllEmission() {
+		for (auto& a : m_emitters) {
+			a->activate(!a->getActive());
+		}
+	}
+	inline void onOffEmissor(int i) {
+		if (m_emitters.size() > 0) {
+			m_emitters[i]->activate(m_emitters[i]->getActive());
+		}
+	}
+
 private:
 	bool isOutOfBounds(const physx::PxVec3& pos) const;
 	void clearDeadParticles();

@@ -38,13 +38,13 @@ float Emissor::newFloat(float min, float max) {
     }
 }
 bool Emissor::update(double t) {
-    if (!m_active || m_freq <= 0.0f) return false;
+    if (m_freq <= 0.0f) return false;
 
     m_currT += static_cast<float>(t);
     float interval = 1.0f / m_freq;
     bool emitted = false;
 
-    while (m_currT >= interval) {
+    while (m_currT >= interval && m_active) {
         if (m_pS != nullptr) {
             // Factor para el radio (se aplica la densidad Gaussiana o Uniforme)
             float fRadius = newFloat(0.0f, 1.0f);

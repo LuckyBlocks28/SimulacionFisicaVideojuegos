@@ -107,7 +107,7 @@ void initPhysics(bool interactive)
 	SceneManager::instance().registerScene<Scene4>("Escena3");
 	
 	// Cargar la escena inicial
-	SceneManager::instance().changeScene("Escena3");
+	SceneManager::instance().changeScene("Escena0");
 	
 }
 

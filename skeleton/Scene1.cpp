@@ -19,6 +19,9 @@ void Scene1::keyPress(unsigned char key, const physx::PxTransform& camera)
 	if (key == 'r' || key == 'R') {
 		prueba->setOriginalPosition();
 		prueba1->setOriginalPosition();
+
+		prueba->setVelocity(Vector3D<float>(0.0f, 0.0f, 40.0f));
+		prueba1->setVelocity(Vector3D<float>(0.0f, 0.0f, 40.0f));
 	}
 }
 
@@ -27,5 +30,7 @@ void Scene1::cleanup()
 	if (prueba) {
 		delete prueba;
 		prueba = nullptr;
+		delete prueba1;
+		prueba1 = nullptr;
 	}
 }

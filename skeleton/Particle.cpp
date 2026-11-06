@@ -71,6 +71,7 @@ void Particle::update(float dt)
 		return;
 	}
 
+
 	// Integrar usando la aceleración calculada para este frame
 	integrateEulerSemi(dt);
 

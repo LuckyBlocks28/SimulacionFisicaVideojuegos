@@ -88,11 +88,11 @@ void Scene4::init()
 
 	//------ Generador de Torbellino -------------
 	pos = Vector3D<float>(0.0f, 0.0f, -50.0f);
-	freq = 100.0f;
+	freq = 500.0f;
 	Emissor* emissor3 = new Emissor(m_particleSystem,
 		pos,
 		dir,
-		new CilinderGeometry(pos, dir, 5.0f, 10.0f, 5.0f), // Base con radio para dispersar partículas
+		new CilinderGeometry(pos, dir, 10.0f, 10.0f, 10.0f), // Base con radio para dispersar partículas
 		pSize,
 		lifeT,
 		pColor,

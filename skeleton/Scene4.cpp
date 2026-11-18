@@ -11,7 +11,7 @@ void Scene4::init()
 	float freq = 30.0f;
 	Vector4 pColor = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 
-	m_particleSystem = new ParticleSystem(gravity, minBounds, maxBounds);
+	m_particleSystem = new ParticleSystem(gravity, minBounds, maxBounds, Particle::TYPE::MOVING);
 	m_ForceSystem = new ForceSystem(m_particleSystem);
 
 	// Emisor desplazado ligeramente del origen para salir del ojo del torbellino
@@ -27,7 +27,6 @@ void Scene4::init()
 		lifeT,
 		pColor,
 		20.0f, 30.0f,
-		Emissor::TYPE::PROYECTILE,
 		0.5f,
 		0.15f,
 		freq,
@@ -63,7 +62,6 @@ void Scene4::init()
 		lifeT,
 		pColor,
 		20.0f, 30.0f,
-		Emissor::TYPE::PROYECTILE,
 		0.5f,
 		0.15f,
 		freq,
@@ -72,17 +70,22 @@ void Scene4::init()
 	);
 	m_particleSystem->addEmissor(emissor2);
 	// Área de viento centrada en Y = 10.0
-	Vector3D<float> windAreaPos(0.0f, 20.0f, 50.0f);
-	Vector3D<float> windAreaDir(.0f, .0f, 1.0f);
-	BoxGeometry* windVolume = new BoxGeometry(windAreaPos, windAreaDir, 20.0f, 10.0f, 20.0f);
-
-	// Viento constante hacia la derecha (+X)
-	Vector3D<float> windVelocity(.0f, .0f, 20.0f);
-	float k1 = 1.5f; // Rozamiento lineal
-	float k2 = 0.0f; // Flujo laminar
-
+	Vector3D<float> windAreaPos(0.0f, 10.0f, 50.0f);
+	Vector3D<float> windAreaDir(1.0f, 0.0f, .0f);
+	BoxGeometry* windVolume = new BoxGeometry(windAreaPos, 
+		windAreaDir, 
+		20.0f, 
+		15.0f, 
+		20.0f);
 	AirForceEmissor* airEmissor = new AirForceEmissor(
-		m_ForceSystem, windAreaPos, windAreaDir, windVolume, windVelocity, k1, k2, true
+		m_ForceSystem, 
+		windAreaPos, 
+		windAreaDir, 
+		windVolume,
+		Vector3D<float>(40.0f, 0.0f, 0.0f), // Viento hacia +X
+		1.5f, 
+		0.0f, 
+		true
 	);
 	m_ForceSystem->addForceEmmiter(airEmissor);
 
@@ -97,7 +100,6 @@ void Scene4::init()
 		lifeT,
 		pColor,
 		20.0f, 30.0f,
-		Emissor::TYPE::PROYECTILE,
 		0.5f,
 		0.15f,
 		freq,
@@ -105,22 +107,28 @@ void Scene4::init()
 		Emissor::DENSITYFUNTION::UNIFORM
 	);
 	m_particleSystem->addEmissor(emissor3);
+	
 	Vector3D<float> typhoonPos(0.0f, 0.0f, -50.0f);
 	Vector3D<float> typhoonDir(0.0f, 1.0f, 0.0f);
-	CilinderGeometry* typhoonVolume = new CilinderGeometry(typhoonPos, typhoonDir, 25.0f, 50.0f, 25.0f);
-
-	float K = 3.0f;   // Intensidad de giro del torbellino
-	k1 = 2.0f;  // Rozamiento lineal aerodinámico
-	k2 = 0.0f;  // Flujo laminar
-
-	TyphoonForceEmissor* typhoon = new TyphoonForceEmissor(
-		m_ForceSystem, 
+	CilinderGeometry* typhoonVolume = new CilinderGeometry(
 		typhoonPos, 
 		typhoonDir, 
-		typhoonVolume, 
-		K, 
-		k1, 
-		k2, 
+		25.0f, 
+		50.0f, 
+		35.0f);
+
+	float K = 5.0f;   // Intensidad de giro del torbellino
+	float k1 = 2.0f;  // Rozamiento lineal aerodinámico
+	float k2 = 0.0f;  // Flujo laminar
+
+	TyphoonForceEmissor* typhoon = new TyphoonForceEmissor(
+		m_ForceSystem,
+		typhoonPos,
+		typhoonDir,
+		typhoonVolume,
+		0.6f, // K moderado para que giren sin salir disparadas arriba
+		0.8f, // k1
+		0.0f, // k2
 		true
 	);
 	m_ForceSystem->addForceEmmiter(typhoon);
@@ -136,7 +144,6 @@ void Scene4::init()
 		lifeT,
 		pColor,
 		20.0f, 30.0f,
-		Emissor::TYPE::PROYECTILE,
 		0.5f,
 		0.15f,
 		freq,

@@ -16,11 +16,6 @@ class ParticleSystem;
 class Emissor
 {
 public:
-	enum TYPE {
-		PARTICLE,
-		PROYECTILE
-	};
-
 	enum DENSITYFUNTION {
 		UNIFORM,
 		NORMAL
@@ -35,14 +30,15 @@ protected:
 
 public:
 
-	Emissor(ParticleSystem* ps, Vector3D<float> position, Vector3D<float> direction, Geometry* g, float size, float lifeTime, Vector4 color, float m_minVel, float m_maxVel, TYPE type, float mean, float stdD, float freq, bool active,DENSITYFUNTION func);
+	Emissor(ParticleSystem* ps, Vector3D<float> position, Vector3D<float> direction, 
+		Geometry* g, float size, float lifeTime, Vector4 color, float m_minVel, 
+		float m_maxVel, float mean, float stdD, float freq, bool active, DENSITYFUNTION func);
 	virtual ~Emissor();
 	
 	inline void activate(bool activate) noexcept { m_active = activate; }
 	inline bool isActive() const noexcept { return m_active; }
 
 	inline void setDensityFunction(DENSITYFUNTION densityFunc) noexcept { m_densityFunc = densityFunc; }
-	inline void setParticleType(TYPE type) noexcept { m_type = type; }
 
 	inline Vector3D<float>& getPos() noexcept { return m_position; }
 	inline Vector3D<float>& getDir() noexcept { return m_direction; }
@@ -62,11 +58,14 @@ public:
 	inline Vector4 getColor() const noexcept { return m_color; }
 	inline bool getActive() const noexcept { return m_active; }
 
+	inline void setKeepInside(bool keep) noexcept { m_keepInside = keep; }
+	inline bool isKeepingInside() const noexcept { return m_keepInside; }
+	inline Geometry* getGeometry() const noexcept { return m_geom; }
+
 	virtual bool update(double t);
 
 protected:
 
-	TYPE m_type;
 	Geometry* m_geom;
 	DENSITYFUNTION m_densityFunc;
 
@@ -74,6 +73,7 @@ protected:
 	Vector4 m_color;
 	float m_mean, m_stdDeviation, m_minVel, m_maxVel, m_freq, m_currT, m_size, m_lifeTime, m_mass;
 	bool m_active;
+	bool m_keepInside = false;
 
 	std::mt19937 m_engine;
 

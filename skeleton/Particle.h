@@ -1,12 +1,18 @@
 #pragma once
 #include "Vector3D.h"
 #include "RenderUtils.hpp"
-
+class Emissor;
 class Particle
 {
 public:
+	enum TYPE {
+		STATIC,
+		MOVING,
+		WITHOUT_GRAVITY,
+		WITHOUT_FORCE
+	};
 	Particle();
-	Particle(Vector3D<float> p, Vector3D<float> v, float size, float mass, Vector4 color = Vector4(0.0, 1.0, 0.0, 1.0));
+	Particle(Vector3D<float> p, Vector3D<float> v, float size, float mass,TYPE	, Vector4 color = Vector4(0.0, 1.0, 0.0, 1.0));
 
 	virtual ~Particle();
 	void integrateEuler(float t);
@@ -29,6 +35,12 @@ public:
 
 	inline void addForce(Vector3D<float> f) { summatoryForce += f; }
 	inline void clearForce() { summatoryForce = Vector3D<float>(0.0f,0.0f,0.0f); }
+
+	inline void setEmissor(Emissor* e) noexcept { m_emissor = e; }
+	inline Emissor* getEmissor() const noexcept { return m_emissor; }
+
+	inline void setType(TYPE t) noexcept { m_type = t; }
+	inline TYPE getType() const noexcept { return m_type; }
 	
 
 	virtual void update(float dt);
@@ -37,7 +49,7 @@ public:
 
 protected:
 	Vector3D<float> vel;
-	Vector3D<float> acc = { 0.0f, 9.8f, 0.0f };
+	Vector3D<float> acc = { 0.0f, -9.8f, 0.0f };
 	float damping;
 
 	physx::PxTransform pose;
@@ -53,6 +65,6 @@ protected:
 	Vector3D<float> summatoryForce;
 	float real_Mass;
 
+	TYPE m_type;
+	Emissor* m_emissor = nullptr;
 };
-
-#pragma once

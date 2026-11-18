@@ -16,6 +16,7 @@ public:
 
     virtual Vector3D<float> calculateDirection(float factorRadius) = 0;
     virtual Vector3D<float> calculateNewPosition(float factorRadius) = 0;
+	virtual void containParticle(Particle* p, float restitution = 0.7f) {}
 
     virtual bool inArea(Particle* p) = 0;
 

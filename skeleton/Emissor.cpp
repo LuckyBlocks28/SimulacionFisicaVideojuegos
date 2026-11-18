@@ -1,9 +1,10 @@
 #include "Emissor.h"
 #include "ParticleSystem.h"
 
-Emissor::Emissor(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, Geometry* g, float size, float lifeTime, Vector4 color, float m_minVel, float m_maxVel, TYPE type, float mean, float stdD, float freq, bool active, DENSITYFUNTION func)
-    : m_pS(pS), m_position(position), m_direction(direction), m_size(size), m_minVel(m_minVel), m_maxVel(m_maxVel), m_type(type), m_mean(mean), m_stdDeviation(stdD), m_freq(freq), m_active(active),
-    m_geom(g), m_densityFunc(func), m_currT(0.0f), m_lifeTime(lifeTime), m_color(color)
+Emissor::Emissor(ParticleSystem* pS, Vector3D<float> position, Vector3D<float> direction, Geometry* g, float size, float lifeTime, Vector4 color, float m_minVel, float m_maxVel, 
+    float mean, float stdD, float freq, bool active, DENSITYFUNTION func)
+    : m_pS(pS), m_position(position), m_direction(direction), m_size(size), m_minVel(m_minVel), m_maxVel(m_maxVel), m_mean(mean), 
+    m_stdDeviation(stdD), m_freq(freq), m_active(active), m_geom(g), m_densityFunc(func), m_currT(0.0f), m_lifeTime(lifeTime), m_color(color)
 {
     std::random_device rd;
     m_engine.seed(rd());
@@ -42,6 +43,7 @@ bool Emissor::update(double t) {
 
     m_currT += static_cast<float>(t);
     float interval = 1.0f / m_freq;
+    if (m_currT > interval * 5.0f) m_currT = interval * 5.0f;
     bool emitted = false;
 
     while (m_currT >= interval && m_active) {
@@ -53,11 +55,18 @@ bool Emissor::update(double t) {
             Vector3D<float> dir = m_geom->calculateDirection(fRadius);
 
             float speed = uniformRandom(m_minVel, m_maxVel);
+            float mag = dir.magnitud();
+            if (mag > 0.0001f) {
+                dir = dir / mag; // Garantiza longitud exacta = 1.0
+            }
             Vector3D<float> vel = dir * speed;
 
             Vector4 color = Vector4({ newFloat(0.0f, 1.0f), newFloat(0.0f, 1.0f), newFloat(0.0f, 1.0f), 1.0f });
 
-            m_pS->addParticle(pos, vel, 1.0f, m_size, m_lifeTime, m_type, color);
+            Particle* p = m_pS->addParticle(pos, vel, m_pS->getParticleType(), 1.0f, m_size, m_lifeTime, color);
+            if (p != nullptr) {
+                p->setEmissor(this);
+            }
         }
 
         m_currT -= interval;

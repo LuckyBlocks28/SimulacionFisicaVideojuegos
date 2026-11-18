@@ -2,13 +2,19 @@
 #include <algorithm>
 #include "ForceSystem.h"
 
-ParticleSystem::ParticleSystem(): m_gravity(0.0f, -9.8f, 0.0f), m_minBounds(-100.0f, -100.0f, -100.0f), m_maxBounds(100.0f, 100.0f, 100.0f), m_useBounds(true), m_defaultParticleSize(0.5f),
-    m_defaultParticleColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f)), m_defaultLifeTime(4.0f)
+ParticleSystem::ParticleSystem()
+	: m_gravity(0.0f, -9.8f, 0.0f), m_minBounds(-100.0f, -100.0f, -100.0f),
+	m_maxBounds(100.0f, 100.0f, 100.0f), m_useBounds(true),
+	m_defaultParticleSize(0.5f), m_defaultParticleColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f)),
+	m_defaultLifeTime(4.0f), m_type(Particle::TYPE::WITHOUT_GRAVITY)
 {
 }
 
-ParticleSystem::ParticleSystem(Vector3D<float> gravity, Vector3D<float> minBounds, Vector3D<float> maxBounds): m_gravity(gravity), m_minBounds(minBounds), m_maxBounds(maxBounds), m_useBounds(true),
-	m_defaultParticleSize(0.5f), m_defaultParticleColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f)), m_defaultLifeTime(4.0f)
+ParticleSystem::ParticleSystem(Vector3D<float> gravity, Vector3D<float> minBounds, Vector3D<float> maxBounds, Particle::TYPE typeP)
+	: m_gravity(gravity), m_minBounds(minBounds),
+	m_maxBounds(maxBounds), m_useBounds(true),
+	m_defaultParticleSize(0.5f), m_defaultParticleColor(Vector4(1.0f, 1.0f, 1.0f, 1.0f)),
+	m_defaultLifeTime(4.0f), m_type(typeP)
 {
 }
 
@@ -41,6 +47,11 @@ void ParticleSystem::removeEmissor(Emissor* emitter)
 {
 	auto it = std::find(m_emitters.begin(), m_emitters.end(), emitter);
 	if (it != m_emitters.end()) {
+		for (Particle* p : m_particles) {
+			if (p && p->getEmissor() == *it) {
+				p->setEmissor(nullptr);
+			}
+		}
 		delete* it;
 		m_emitters.erase(it);
 	}
@@ -53,37 +64,16 @@ void ParticleSystem::addParticle(Particle* particle)
 	}
 }
 
-void ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, float mass, float size, float lifeTime, Vector4 color)
+Particle* ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, Particle::TYPE typeP, float mass, float size, float lifeTime,Vector4 color)
 {
-	Particle* p = new Particle(pos,vel,size,mass,color);
-	p->setAcceleration(m_gravity); // Aplica la gravedad (-10 en Y)
+	Particle* p = new Particle(pos, vel, size, mass, typeP, color);
+	p->setAcceleration(m_gravity);
 	p->setLifeTime(lifeTime);
 	m_particles.push_back(p);
+	
+	return p;
 }
 
-void ParticleSystem::addParticle(Vector3D<float> pos, Vector3D<float> vel, float mass, float size, float lifeTime, Emissor::TYPE type, Vector4 color)
-{
-	Particle* p = nullptr;
-
-	if (type == Emissor::PROYECTILE) {
-
-		// Instancia la clase derivada Proyectile
-		float defaultMass = 1.0f;
-		p = new Proyectile(pos, vel, size, defaultMass, color);
-	}
-
-	else {
-
-		// Instancia la clase base Particle
-		p = new Particle(pos, vel, size, mass, color);
-		p->setAcceleration(m_gravity); // Aplica gravedad global si es partícula estándar
-	}
-
-	if (p != nullptr) {
-		p->setLifeTime(lifeTime);
-		m_particles.push_back(p);
-	}
-}
 bool ParticleSystem::isOutOfBounds(const physx::PxVec3& pos) const
 {
 	if (!m_useBounds) return false;
@@ -95,27 +85,34 @@ bool ParticleSystem::isOutOfBounds(const physx::PxVec3& pos) const
 
 void ParticleSystem::update(double dt)
 {
-	//Actualizar emisores para generar nuevas partículas
+	// Actualizar emisores para generar nuevas partículas
 	for (Emissor* emitter : m_emitters) {
 		if (emitter && emitter->isActive()) {
 			emitter->update(dt);
 		}
 	}
 
-	//Actualizar cada partícula activa
+	// Actualizar cada partícula activa
 	for (Particle* p : m_particles) {
 		if (!p || !p->isActive()) continue;
 
-		// Actualizar integración física y tiempo de vida
+		// 1. Actualizar integración física y restar tiempo de vida
 		p->update(dt);
+		if (!p->isActive()) continue;
 
-		// Comprobar condición 2: Abandona el espacio de acción
+		// 2. Mantener dentro de la geometría de su propio emisor si está activo
+		Emissor* owner = p->getEmissor();
+		if (owner && owner->isKeepingInside() && owner->getGeometry()) {
+			owner->getGeometry()->containParticle(p);
+		}
+
+		// 3. Comprobar límites globales del sistema
 		if (isOutOfBounds(p->getPos())) {
 			p->deactivate();
 		}
 	}
 
-	//Eliminar partículas desactivadas para liberar memoria
+	// Eliminar partículas desactivadas para liberar memoria
 	clearDeadParticles();
 }
 
@@ -126,7 +123,7 @@ void ParticleSystem::clearDeadParticles()
 		Particle* p = *it;
 		if (p == nullptr || !p->isActive()) {
 			if (p) {
-				delete p; // Llama a ~Particle() liberando el RenderItem
+				delete p;
 			}
 			it = m_particles.erase(it);
 		}

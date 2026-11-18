@@ -25,7 +25,7 @@ private:
 
 public:
 	ParticleSystem();
-	ParticleSystem(Vector3D<float> gravity, Vector3D<float> minBounds, Vector3D<float> maxBounds);
+	ParticleSystem(Vector3D<float> gravity, Vector3D<float> minBounds, Vector3D<float> maxBounds, Particle::TYPE typeP);
 	~ParticleSystem();
 
 	// Gestión de emisores
@@ -34,8 +34,9 @@ public:
 
 	// Creación e inserción de partículas
 	void addParticle(Particle* particle);
-	void addParticle(Vector3D<float> pos, Vector3D<float> vel, float mass, float size = 1.0f, float lifeTime = 5.0f, Vector4 color = Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-	void addParticle(Vector3D<float> pos, Vector3D<float> vel, float mass, float size = 0.5f, float lifeTime = 4.0f, Emissor::TYPE type = Emissor::PARTICLE,  Vector4 color = Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+	Particle* addParticle(Vector3D<float> pos, Vector3D<float> vel, Particle::TYPE typeP, float mass, float size = 0.5f, float lifeTime = 4.0f, 
+		Vector4 color = Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+
 
 	// Bucle principal
 	void update(double dt);
@@ -65,13 +66,15 @@ public:
 		}
 	}
 	inline void onOffEmissor(int i) {
-		if (m_emitters.size() > 0) {
-			m_emitters[i]->activate(m_emitters[i]->getActive());
+		if (i >= 0 && i < m_emitters.size()) {
+			m_emitters[i]->activate(!m_emitters[i]->getActive());
 		}
 	}
+	inline Particle::TYPE getParticleType() const noexcept { return m_type; }
 
 private:
 	bool isOutOfBounds(const physx::PxVec3& pos) const;
 	void clearDeadParticles();
+	Particle::TYPE m_type;
 };
 

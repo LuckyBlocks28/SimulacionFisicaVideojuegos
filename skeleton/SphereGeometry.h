@@ -12,6 +12,7 @@ public:
 
     virtual Vector3D<float> calculateDirection(float factorRadius) override;
     virtual Vector3D<float> calculateNewPosition(float factorRadius) override;
+    void containParticle(Particle* p, float restitution = 0.7f) override;
 
     virtual bool inArea(Particle* p) override;
 private:

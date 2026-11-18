@@ -1,15 +1,21 @@
 #include "Particle.h"
 
-
-
-Particle::Particle() : ogPos(0, 0, 0), vel(0, 0, 0), acc(0, 0, 0), damping(0.5f),
-active(false), firstMove(true), remainingLife(0.0f), renderItem(nullptr)
+Particle::Particle()
+	: pose(physx::PxTransform(physx::PxVec3(0, 0, 0))),
+	antPos(physx::PxTransform(physx::PxVec3(0, 0, 0))),
+	ogPos(0, 0, 0), vel(0, 0, 0), acc(0.0f, -9.8f, 0.0f),
+	summatoryForce(0.0f, 0.0f, 0.0f), damping(0.99f), real_Mass(1.0f),
+	active(false), firstMove(true), remainingLife(0.0f),
+	renderItem(nullptr), m_type(TYPE::STATIC)
 {
-
 }
-Particle::Particle(Vector3D<float> p, Vector3D<float> v, float size, float mass, Vector4 color)
-	: pose(physx::PxTransform(p)), ogPos(p), vel(v), acc(Vector3D<float>(0.0f, -10.0f, 0.0f)),
-	damping(0.5f), real_Mass(mass), active(true), firstMove(true), renderItem(nullptr)
+
+Particle::Particle(Vector3D<float> p, Vector3D<float> v, float size, float mass, TYPE type, Vector4 color)
+	: pose(physx::PxTransform(p)), antPos(physx::PxTransform(p)),
+	ogPos(p), vel(v), acc(0.0f, -9.8f, 0.0f),
+	summatoryForce(0.0f, 0.0f, 0.0f), damping(0.99f), real_Mass(mass),
+	active(true), firstMove(true), renderItem(nullptr),
+	m_type(type), remainingLife(5.0f)
 {
 	physx::PxShape* shape = CreateShape(physx::PxSphereGeometry(size));
 	renderItem = new RenderItem(shape, &pose, color);
@@ -53,8 +59,20 @@ void Particle::integrateVerlet(float t)
 
 void Particle::integrateEulerSemi(float t)
 {
-	float massFactor = (real_Mass > 0.0001f) ? (1.0f / real_Mass) : 1.0f;
-	Vector3D<float> effectiveAcc = acc + (summatoryForce * massFactor);
+	if (m_type == TYPE::STATIC) return;
+
+	Vector3D<float> effectiveAcc(0.0f, 0.0f, 0.0f);
+
+	// MOVING y WITHOUT_GRAVITY reciben fuerzas externas
+	if (m_type == TYPE::MOVING || m_type == TYPE::WITHOUT_GRAVITY) {
+		float massFactor = (real_Mass > 0.0001f) ? (1.0f / real_Mass) : 1.0f;
+		effectiveAcc += summatoryForce * massFactor;
+	}
+
+	// MOVING y WITHOUT_FORCE reciben gravedad
+	if (m_type == TYPE::MOVING || m_type == TYPE::WITHOUT_FORCE) {
+		effectiveAcc += acc;
+	}
 
 	vel += effectiveAcc * t;
 	vel *= std::pow(damping, t);
@@ -64,16 +82,14 @@ void Particle::integrateEulerSemi(float t)
 void Particle::update(float dt)
 {
 	if (!active) return;
-
-	remainingLife -= dt;
-	if (remainingLife <= 0.0f) {
-		deactivate();
-		return;
+	if (m_type != TYPE::STATIC) {
+		remainingLife -= dt;
+		if (remainingLife <= 0.0f) {
+			deactivate();
+			return;
+		}
+		integrateEulerSemi(dt);
 	}
-
-
-	// Integrar usando la aceleración calculada para este frame
-	integrateEulerSemi(dt);
 
 	// Resetear fuerzas acumuladas para el siguiente frame
 	clearForce();

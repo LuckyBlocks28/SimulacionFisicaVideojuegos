@@ -7,14 +7,14 @@
 void Scene3::init()
 {
     Vector3D<float> gravity(0.0f, -9.8f, 0.0f);
-    Vector3D<float> minBounds(-50.0f, -5.0f, -50.0f);
+    Vector3D<float> minBounds(-50.0f, -50.0f, -50.0f);
     Vector3D<float> maxBounds(100.0f, 100.0f, 100.0f);
     float pSize = 1.0f;
     float lifeT = 5.0f;
     float freq = 100.0f;
     Vector4 pColor = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
 
-    m_particleSystem = new ParticleSystem(gravity, minBounds, maxBounds);
+    m_particleSystem = new ParticleSystem(gravity, minBounds, maxBounds,Particle::TYPE::WITHOUT_GRAVITY);
  
     Vector3D<float> pos(0.0f, 0.0f, 0.0f);
     Vector3D<float> dir(0.f, 1.f, 0.f);
@@ -27,8 +27,7 @@ void Scene3::init()
         pSize, //Tamaño de partícula
         lifeT, // Tiempo de vida
         pColor,  //Color de particula
-        10.0f, 50.0f, // Velocidad mín y máx de salida
-        Emissor::TYPE::PROYECTILE, //Tipo de proyectil
+        10.0f, 20.0f, // Velocidad mín y máx de salida
         0.5f, // Media
         0.15f, //Desviación típica
         freq, // Frecuencia
@@ -45,14 +44,13 @@ void Scene3::init()
         new PrismGeometry(pos, dir, 3.0f, 3.0f, 30.0f,10.0f,10.0f), //Geometría
         pSize, //Tamaño de partícula
         lifeT, // Tiempo de vida
-        pColor,  //Color de particula
-        10.0f, 40.0f, // Velocidad mín y máx de salida
-        Emissor::TYPE::PROYECTILE, //Tipo de proyectil
+        pColor, //Color de particula
+        10.0f, 20.0f,
         0.0f, // Media
         1.0f, //Desviación típica
         freq, // Frecuencia
         true, // Activo desde el inicio
-        Emissor::DENSITYFUNTION::NORMAL //Tipo de distribución
+        Emissor::DENSITYFUNTION::UNIFORM //Tipo de distribución
     );
     m_particleSystem->addEmissor(emissor2);
 
@@ -62,18 +60,18 @@ void Scene3::init()
         m_particleSystem,
         pos,  //Posición
         dir,  //Dirección
-        new BoxGeometry(pos, dir, 10.0f, 10.0f, 10.0f), //Geometría
+        new BoxGeometry(pos, dir, 20.0f, 20.0f, 20.0f), //Geometría
         pSize, //Tamaño de partícula
         lifeT, // Tiempo de vida
         pColor,  //Color de particula
         10.0f, 20.0f, // Velocidad mín y máx de salida
-        Emissor::TYPE::PROYECTILE, //Tipo de proyectil
         0.5f, // Media
         1.0f, //Desviación típica
         freq, // Frecuencia
         true, // Activo desde el inicio
-        Emissor::DENSITYFUNTION::NORMAL //Tipo de distribución
+        Emissor::DENSITYFUNTION::UNIFORM //Tipo de distribución
     );
+    emissor3->setKeepInside(true);
     m_particleSystem->addEmissor(emissor3);
 
     pos = Vector3D<float>(50.0f, 0.0f, 0.0f);
@@ -81,18 +79,18 @@ void Scene3::init()
         m_particleSystem,
         pos,  //Posición
         dir,  //Dirección
-        new SphereGeometry(pos, dir, 5.0f), //Geometría
+        new SphereGeometry(pos, dir, 20.0f), //Geometría
         pSize, //Tamaño de partícula
         lifeT, // Tiempo de vida
         pColor,  //Color de particula
-        10.0f, 40.0f, // Velocidad mín y máx de salida
-        Emissor::TYPE::PROYECTILE, //Tipo de proyectil
+        10.0f, 20.0f, // Velocidad mín y máx de salida
         0.0f, // Media
         1.0f, //Desviación típica
         freq, // Frecuencia
         true, // Activo desde el inicio
-        Emissor::DENSITYFUNTION::NORMAL //Tipo de distribución
+        Emissor::DENSITYFUNTION::UNIFORM //Tipo de distribución
     );
+    emissor4->setKeepInside(true);
     m_particleSystem->addEmissor(emissor4);
 }
 

@@ -86,7 +86,9 @@
     <ClCompile Include="BuoyancyForceEmissor.cpp">
       <Filter>ForceSystem</Filter>
     </ClCompile>
-    <ClCompile Include="LiquidDragForceEmissor.cpp" />
+    <ClCompile Include="LiquidDragForceEmissor.cpp">
+      <Filter>ForceSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -188,7 +190,9 @@
     <ClInclude Include="BuoyancyForceEmissor.h">
       <Filter>ForceSystem</Filter>
     </ClInclude>
-    <ClInclude Include="LiquidDragForceEmissor.h" />
+    <ClInclude Include="LiquidDragForceEmissor.h">
+      <Filter>ForceSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">

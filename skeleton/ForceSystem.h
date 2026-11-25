@@ -11,6 +11,8 @@ public:
 	ForceSystem() = default;
 	ForceSystem(Particle* p);
 	ForceSystem(ParticleSystem* p);
+	ForceSystem(std::vector<Particle*> p);
+	ForceSystem(std::vector<ParticleSystem*> pS);
 	ForceSystem(std::vector<Particle*> p, std::vector<ParticleSystem*> pS);
 
 	~ForceSystem();

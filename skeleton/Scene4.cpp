@@ -42,7 +42,6 @@ void Scene4::init()
 	Vector3D<float> forceVectorDir(1.0f, 0.0f, 0.0f);
 
 	GravityForceEmissor* gravityEmissor = new GravityForceEmissor(
-		m_ForceSystem,
 		forcePos,
 		forceVectorDir,
            new SphereGeometry(forcePos, forceDir, 10.0f),
@@ -78,7 +77,6 @@ void Scene4::init()
 		15.0f, 
 		20.0f);
 	AirForceEmissor* airEmissor = new AirForceEmissor(
-		m_ForceSystem, 
 		windAreaPos, 
 		windAreaDir, 
 		windVolume,
@@ -122,7 +120,6 @@ void Scene4::init()
 	float k2 = 0.0f;  // Flujo laminar
 
 	TyphoonForceEmissor* typhoon = new TyphoonForceEmissor(
-		m_ForceSystem,
 		typhoonPos,
 		typhoonDir,
 		typhoonVolume,
@@ -158,7 +155,6 @@ void Scene4::init()
 
 
 	m_explosionEmissor = new ExplosionForceEmissor(
-		m_ForceSystem,
 		pos,
 		new SphereGeometry(pos, Vector3D<float>(0, 1, 0), explosionRadius),
 		K,

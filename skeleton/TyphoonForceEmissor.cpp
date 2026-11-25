@@ -1,7 +1,7 @@
 #include "TyphoonForceEmissor.h"
 
-TyphoonForceEmissor::TyphoonForceEmissor(ForceSystem* fS, Vector3D<float> pos, Vector3D<float> dir, Geometry* g, float K, float k1, float k2, bool active) :
-	AirForceEmissor(fS, pos, dir, g, Vector3D<float>(0.0f, 0.0f, 0.0f), k1, k2, active), m_K(K)
+TyphoonForceEmissor::TyphoonForceEmissor(Vector3D<float> pos, Vector3D<float> dir, Geometry* g, float K, float k1, float k2, bool active) :
+	AirForceEmissor(pos, dir, g, Vector3D<float>(0.0f, 0.0f, 0.0f), k1, k2, active), m_K(K)
 {
 }
 

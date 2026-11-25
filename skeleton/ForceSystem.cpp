@@ -10,6 +10,13 @@ ForceSystem::ForceSystem(ParticleSystem* pS)
 	if (pS) m_particleSystems.push_back(pS);
 }
 
+ForceSystem::ForceSystem(std::vector<Particle*> p): m_singleParticles(p)
+{
+}
+ForceSystem::ForceSystem(std::vector<ParticleSystem*> pS) : m_particleSystems(pS)
+{
+}
+
 ForceSystem::ForceSystem(std::vector<Particle*> p, std::vector<ParticleSystem*> pS): m_singleParticles(p), m_particleSystems(pS)
 {
 }
@@ -56,7 +63,7 @@ void ForceSystem::update(double dt)
 		// 2. Aplicar fuerzas a partículas individuales
 		for (auto* p : m_singleParticles) {
 			if (p && p->isActive()) {
-				emitter->addForce(p, dt);
+				emitter->addForce(p);
 			}
 		}
 
@@ -65,7 +72,7 @@ void ForceSystem::update(double dt)
 			if (!ps) continue;
 			for (auto* p : ps->getParticles()) {
 				if (p && p->isActive()) {
-					emitter->addForce(p, dt);
+					emitter->addForce(p);
 				}
 			}
 		}

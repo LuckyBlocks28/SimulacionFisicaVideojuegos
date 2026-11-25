@@ -263,13 +263,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AirForceEmissor.cpp" />
+    <ClCompile Include="AnchoredSpringForceEmissor.cpp" />
     <ClCompile Include="BoxGeometry.cpp" />
+    <ClCompile Include="BuoyancyForceEmissor.cpp" />
     <ClCompile Include="callbacks.cpp" />
     <ClCompile Include="CilinderGeometry.cpp" />
     <ClCompile Include="Emissor.cpp" />
     <ClCompile Include="ExplosionForceEmissor.cpp" />
     <ClCompile Include="ForceSystem.cpp" />
     <ClCompile Include="GravityForceEmissor.cpp" />
+    <ClCompile Include="LiquidDragForceEmissor.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
@@ -283,13 +286,18 @@
     <ClCompile Include="Scene2.cpp" />
     <ClCompile Include="Scene3.cpp" />
     <ClCompile Include="Scene4.cpp" />
+    <ClCompile Include="Scene5.cpp" />
+    <ClCompile Include="Scene6.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SphereGeometry.cpp" />
+    <ClCompile Include="SpringForceEmissor.cpp" />
     <ClCompile Include="TyphoonForceEmissor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AirForceEmissor.h" />
+    <ClInclude Include="AnchoredSpringForceEmissor.h" />
     <ClInclude Include="BoxGeometry.h" />
+    <ClInclude Include="BuoyancyForceEmissor.h" />
     <ClInclude Include="callbacks.hpp" />
     <ClInclude Include="CilinderGeometry.h" />
     <ClInclude Include="core.hpp" />
@@ -300,6 +308,7 @@
     <ClInclude Include="ForceSystem.h" />
     <ClInclude Include="Geometry.h" />
     <ClInclude Include="GravityForceEmissor.h" />
+    <ClInclude Include="LiquidDragForceEmissor.h" />
     <ClInclude Include="Particle.h" />
     <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="PrismGeometry.h" />
@@ -312,8 +321,11 @@
     <ClInclude Include="Scene2.h" />
     <ClInclude Include="Scene3.h" />
     <ClInclude Include="Scene4.h" />
+    <ClInclude Include="Scene5.h" />
+    <ClInclude Include="Scene6.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SphereGeometry.h" />
+    <ClInclude Include="SpringForceEmissor.h" />
     <ClInclude Include="TyphoonForceEmissor.h" />
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>

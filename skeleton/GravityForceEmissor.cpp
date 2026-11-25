@@ -1,11 +1,11 @@
 #include "GravityForceEmissor.h"
 #include <iostream>
 
-GravityForceEmissor::GravityForceEmissor(ForceSystem* fS, Vector3D<float> pos, Vector3D<float> dir, Geometry* g, float gravityMagnitude, bool active, GravityType type)
-	: ForceEmmiter(fS, pos, dir, g, gravityMagnitude, active), m_type(type)
+GravityForceEmissor::GravityForceEmissor(Vector3D<float> pos, Vector3D<float> dir, Geometry* g, float gravityMagnitude, bool active, GravityType type)
+	: ForceEmmiter(pos, dir, g, gravityMagnitude, active), m_type(type)
 {
 }
-void GravityForceEmissor::addForce(Particle* p, double dt)
+void GravityForceEmissor::addForce(Particle* p)
 {
 	if (!m_active || !m_geom || !p || !p->isActive()) return;
 

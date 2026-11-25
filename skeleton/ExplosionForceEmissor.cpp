@@ -1,7 +1,7 @@
 #include "ExplosionForceEmissor.h"
 
-ExplosionForceEmissor::ExplosionForceEmissor(ForceSystem* fS, Vector3D<float> pos, Geometry* g, float K, float tau, float radius, bool active)
-	: ForceEmmiter(fS, pos, Vector3D<float>(0.0f, 1.0f, 0.0f), g, 0.0f, active),
+ExplosionForceEmissor::ExplosionForceEmissor(Vector3D<float> pos, Geometry* g, float K, float tau, float radius, bool active)
+	: ForceEmmiter(pos, Vector3D<float>(0.0f, 1.0f, 0.0f), g, 0.0f, active),
 	m_K(K), m_tau(tau), m_radius(radius), m_time(0.0f)
 {
 }
@@ -31,7 +31,7 @@ void ExplosionForceEmissor::update(double dt)
 	}
 }
 
-void ExplosionForceEmissor::addForce(Particle* p, double dt)
+void ExplosionForceEmissor::addForce(Particle* p)
 {
 	if (!m_active || !p || !p->isActive()) return;
 

@@ -68,7 +68,25 @@
     <ClCompile Include="TyphoonForceEmissor.cpp">
       <Filter>ForceSystem</Filter>
     </ClCompile>
-    <ClCompile Include="ExplosionForceEmissor.cpp" />
+    <ClCompile Include="SpringForceEmissor.cpp">
+      <Filter>ForceSystem\Spring</Filter>
+    </ClCompile>
+    <ClCompile Include="ExplosionForceEmissor.cpp">
+      <Filter>ForceSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene5.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="AnchoredSpringForceEmissor.cpp">
+      <Filter>ForceSystem\Spring</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene6.cpp">
+      <Filter>Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="BuoyancyForceEmissor.cpp">
+      <Filter>ForceSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="LiquidDragForceEmissor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Render\Camera.h">
@@ -152,7 +170,25 @@
     <ClInclude Include="TyphoonForceEmissor.h">
       <Filter>ForceSystem</Filter>
     </ClInclude>
-    <ClInclude Include="ExplosionForceEmissor.h" />
+    <ClInclude Include="SpringForceEmissor.h">
+      <Filter>ForceSystem\Spring</Filter>
+    </ClInclude>
+    <ClInclude Include="ExplosionForceEmissor.h">
+      <Filter>ForceSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene5.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="AnchoredSpringForceEmissor.h">
+      <Filter>ForceSystem\Spring</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene6.h">
+      <Filter>Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="BuoyancyForceEmissor.h">
+      <Filter>ForceSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="LiquidDragForceEmissor.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Render">
@@ -175,6 +211,9 @@
     </Filter>
     <Filter Include="ForceSystem">
       <UniqueIdentifier>{4b4ffb0c-3116-493d-b1da-35ecfd3b536f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ForceSystem\Spring">
+      <UniqueIdentifier>{f5f41f7a-cedb-4d2f-891a-52ebd66de0db}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

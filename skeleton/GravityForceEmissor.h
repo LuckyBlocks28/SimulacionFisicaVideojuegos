@@ -10,10 +10,10 @@ public:
 		Point        // Atrae la partícula hacia m_position (Centro de gravedad)
 	}; 
 
-	GravityForceEmissor(ForceSystem* fS, Vector3D<float> pos, Vector3D<float> dir, Geometry* g, float gravityMagnitude,bool active, GravityType type = GravityType::Directional);
+	GravityForceEmissor(Vector3D<float> pos, Vector3D<float> dir, Geometry* g, float gravityMagnitude,bool active, GravityType type = GravityType::Directional);
 	virtual ~GravityForceEmissor() = default;
 
-	virtual void addForce(Particle* p, double dt) override;
+	virtual void addForce(Particle* p) override;
 
 	inline void setGravityType(GravityType type) noexcept { m_type = type; }
 

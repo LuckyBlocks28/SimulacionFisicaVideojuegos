@@ -4,7 +4,7 @@
 class TyphoonForceEmissor : public AirForceEmissor
 {
 public:
-	TyphoonForceEmissor(ForceSystem* fS,
+	TyphoonForceEmissor(
 		Vector3D<float> pos,
 		Vector3D<float> dir,
 		Geometry* g,

@@ -4,7 +4,7 @@
 class AirForceEmissor : public ForceEmmiter
 {
 public:
-	AirForceEmissor(ForceSystem* fS,
+	AirForceEmissor(
 		Vector3D<float> pos,
 		Vector3D<float> dir,
 		Geometry* g,
@@ -16,7 +16,7 @@ public:
 	virtual ~AirForceEmissor() = default;
 
 	// Cambiar a applyForce o addForce según la firma de tu ForceEmmiter.h
-	virtual void addForce(Particle* p, double dt) override;
+	virtual void addForce(Particle* p) override;
 
 	// Método virtual que será sobreescrito por TyphoonForceEmissor
 	virtual Vector3D<float> getWindVelocityAt(const Vector3D<float>& particlePos) const;

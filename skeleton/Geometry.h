@@ -11,26 +11,45 @@
 class Geometry
 {
 public:
+	/// <summary>
+	/// Constructora de la clase
+	/// </summary>
+	/// <param name="pos"> Posición de la geometría</param>
+	/// <param name="dir"> Dirección de la geometría</param>
 	Geometry(Vector3D<float> pos, Vector3D<float> dir): m_position(pos),m_direction(dir) {};
 	virtual ~Geometry() = default;
 
-    virtual Vector3D<float> calculateDirection(float factorRadius) = 0;
+	// ----- Métodos de cálculo de dirección y posición de la particula -----
+    
+	virtual Vector3D<float> calculateDirection(float factorRadius) = 0;
     virtual Vector3D<float> calculateNewPosition(float factorRadius) = 0;
+
+	//Método para comprobar que tiene la parícula dentro de la gemotría
 	virtual void containParticle(Particle* p, float restitution = 0.7f) {}
 
+	//Método para comprobar que se encuentra dentro de la geometría la partícula
     virtual bool inArea(Particle* p) = 0;
+
+	// --------- Métodos accesores ---------
 
 	inline Vector3D<float>& getPos() noexcept { return m_position; }
 	inline Vector3D<float>& getDir() noexcept { return m_direction; }
 
 protected:
+	//Constante de 2*pi
     const float TWO_PI = 2.0f * std::numbers::pi_v<float>; 
 	
-    Vector3D<float> m_position, m_direction;
+	//Posición de la geometría
+	Vector3D<float> m_position;
+	//Dirección de la geometría
+	Vector3D<float> m_direction;
     
+	//Variables de caluclo de rotacion
     float x, y, z;
+	//Offset en para trasladarlo el objeto
     Vector3D<float> offset = Vector3D<float>(0.0f, 0.0f, 0.0f);
 
+	//Método para rotar la geometría total y de esa manera modificar la dirección de esta
 	void rotatePoint(Vector3D<float>& position, const Vector3D<float>& u, const Vector3D<float>& v, const Vector3D<float>& center);
 };
 

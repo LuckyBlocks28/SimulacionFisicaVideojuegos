@@ -3,11 +3,11 @@
 Proyectile::Proyectile(Vector3D<float> p, Vector3D<float> v, float size, float mass, Vector4 color)
 	: Particle(p, v, size, mass, Particle::TYPE::MOVING, color), velR(v) // Orden correcto de size y mass
 {
-	// 1. Calcular velocidades primero
+	//Calcular velocidades primero
 	vel = velR / velSFactor;
 	simulated_Velocity = vel.magnitud();
 
-	// 2. Calcular masa y gravedad simulada una vez asignada simulated_Velocity
+	//Calcular masa y gravedad simulada una vez asignada simulated_Velocity
 	simulated_Mass = calculateSimulatedMass();
 	simulated_Gravity = calculateSimulateGravity();
 
